@@ -1,0 +1,157 @@
+{
+  "contractName": "Governance",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Governance.sol\":\"Governance\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Governance.sol\":{\"keccak256\":\"0x00e904c0a7fe132fa5acf7620ec05449f1331f3a47ca10807d8cea140d9087a8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://026bad8db5533b2b0f6f277332551b657a2c9d93c2a9653c90c201bbebf81cda\",\"dweb:/ipfs/QmdTUGJEHmVz2tHei3S6v4Tb5N9D2sBh1JULT9ADmUU4kS\"]},\"project:/contracts/Proposal.sol\":{\"keccak256\":\"0x70d9b33db48f2c07c8662a80c47b0ba2ebc8960194e2b54c5c094596c26c3c09\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://bc70cf1150aca41847d762736ac5117b47da8a0bc021e58a1769614e15c7f866\",\"dweb:/ipfs/QmaNm3ELnvqW16WStNzKyKnfkr16uV4uShKkSAJ2NYKRBf\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220031c9ba07d2cc6b8f51869acee4390d4aa8c1f7c172adce3f2da710125a2aeed64736f6c63430008090033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220031c9ba07d2cc6b8f51869acee4390d4aa8c1f7c172adce3f2da710125a2aeed64736f6c63430008090033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "88:22:1:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "88:22:1:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.6;\r\n\r\nimport \"./Proposal.sol\";\r\n\r\ncontract Governance {}\r\n",
+  "sourcePath": "F:\\ethdev\\governance\\contracts\\Governance.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/Governance.sol",
+    "exportedSymbols": {
+      "Governance": [
+        6
+      ],
+      "Proposal": [
+        46
+      ]
+    },
+    "id": 7,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:1"
+      },
+      {
+        "absolutePath": "project:/contracts/Proposal.sol",
+        "file": "./Proposal.sol",
+        "id": 5,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 7,
+        "sourceUnit": 47,
+        "src": "60:24:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Governance",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 6,
+        "linearizedBaseContracts": [
+          6
+        ],
+        "name": "Governance",
+        "nameLocation": "97:10:1",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 7,
+        "src": "88:22:1",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:79:1"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/Governance.sol",
+    "exportedSymbols": {
+      "Governance": [
+        6
+      ],
+      "Proposal": [
+        46
+      ]
+    },
+    "id": 7,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 4,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".6"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:1"
+      },
+      {
+        "absolutePath": "project:/contracts/Proposal.sol",
+        "file": "./Proposal.sol",
+        "id": 5,
+        "nameLocation": "-1:-1:-1",
+        "nodeType": "ImportDirective",
+        "scope": 7,
+        "sourceUnit": 47,
+        "src": "60:24:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "Governance",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 6,
+        "linearizedBaseContracts": [
+          6
+        ],
+        "name": "Governance",
+        "nameLocation": "97:10:1",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 7,
+        "src": "88:22:1",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:79:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0xb47262f9949dB42Dec0bFb4bF024142a1a9998A6",
+      "transactionHash": "0xee8c0721e7dae8b0b2f4ff9140749afcaab9c64af450bed88ba2a86e3f3f2f6f"
+    }
+  },
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-10-30T14:45:54.787Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
