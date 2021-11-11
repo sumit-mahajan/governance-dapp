@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import "./create_proposal.scss";
 import { useConnection } from '../../components/connection_provider';
 import { Box } from '../../components/utils/Box';
 import Loading from '../../components/utils/loading/Loading';
@@ -134,7 +135,26 @@ function CreateProposal(props) {
     // }
 
     return (
-        <div></div>
+        <div className="container create-proposal">
+            <div className="heading title">Create Proposal</div>
+            <div className="proposal-box" >
+                <div className="label">Title</div>
+                <div className="textfield" >
+                    <input id="title" onChange={e => setTitle(e.target.value)} type="text" placeholder="Title of Proposal" />
+                </div>
+
+                <Box height="5"></Box>
+
+                <div className="label">Desrcription</div>
+                <div className="textfield">
+                    <textarea  id = "description" onChange={(e) => setDescription(e.target.value)} rows="10" placeholder="Why should people vote on your proposal?"/>
+                </div>
+
+                <Box height="20"></Box>
+
+                <button className="clickable">Submit Proposal</button>
+            </div>
+        </div>
         // <div>
         //     {isTransaction && <div className="backdrop" style={{ zIndex: 3 }}>
         //         <Loading />
