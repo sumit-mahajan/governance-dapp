@@ -4,46 +4,18 @@ import { useConnection } from '../../components/connection_provider';
 import { Box } from '../../components/utils/Box';
 import Loading from '../../components/utils/loading/Loading';
 
-function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-        ref.current = value;
-    });
-    return ref.current;
-}
-
 function CreateProposal(props) {
     const { connectionState, setConnectionState } = useConnection();
-    const { accounts, appContract } = connectionState;
-    const { openMenu, setOpenMenu } = props;
 
     // Poll Data input 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [optionList, setOptionList] = useState(["Yae", "Nah"]);
-    const [duration, setDuration] = useState("60"); // 5 minutes = 300 seconds
 
     // For validation errors
-    const [error, setError] = useState({ title: null, description: null, optionIndex: null, sameOption: null, addField: null });
+    const [error, setError] = useState({ title: null, description: null, button: null });
 
     // To avoid sending multiple transactions while one is already sent
     const [isTransaction, setTransaction] = useState(false);
-
-    const prevList = usePrevious(optionList) || optionList;
-
-    // Whenever option is edited or added or removed from optionList
-    useEffect(() => {
-        // Array.from(document.getElementsByClassName('option-field')).map((element, idx) => {
-        //     // Set values for options from optionList
-        //     element.setAttribute('value', optionList[idx]);
-        //     // Focus and select only when new option added
-        //     if (prevList.length < optionList.length) {
-        //         element.focus();
-        //         element.select();
-        //     }
-        //     return null;
-        // });
-    }, [optionList]);
 
     // const handleCreate = async () => {
     //     setError({});
@@ -147,7 +119,7 @@ function CreateProposal(props) {
 
                 <div className="label">Desrcription</div>
                 <div className="textfield">
-                    <textarea  id = "description" onChange={(e) => setDescription(e.target.value)} rows="10" placeholder="Why should people vote on your proposal?"/>
+                    <textarea id="description" onChange={(e) => setDescription(e.target.value)} rows="10" placeholder="Why should people vote on your proposal?" />
                 </div>
 
                 <Box height="20"></Box>
@@ -159,7 +131,6 @@ function CreateProposal(props) {
         //     {isTransaction && <div className="backdrop" style={{ zIndex: 3 }}>
         //         <Loading />
         //     </div>}
-        //     <div className="backdrop"></div>
         //     <div className="add-poll">
         //         {openMenu && accounts.length === 0 && <ConnectOverlay />}
 

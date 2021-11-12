@@ -1,12 +1,12 @@
-const Governance = artifacts.require("./Governance.sol");
+const GovToken = artifacts.require("./GovToken.sol");
 
-contract("Governance", (accounts) => {
-    let governanceInstance;
+contract("GovToken", (accounts) => {
+    let govTokenInstance;
     let address;
 
     beforeEach("Access deployed contract", async () => {
         // Access deployed contract
-        governanceInstance = await Governance.deployed();
+        govTokenInstance = await GovToken.deployed();
     });
 
     it("Sample Test", async () => {

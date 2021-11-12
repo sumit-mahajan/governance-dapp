@@ -8,6 +8,13 @@ module.exports = {
     develop: {
       port: 7545,
     },
+    // geth attach ipc:\\.\pipe\geth.ipc
+    // migrate --network geth
+    geth: {
+      host: "localhost",
+      port: 8545,
+      network_id: "*"
+    }
   },
   compilers: {
     solc: {

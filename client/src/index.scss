@@ -80,13 +80,13 @@ body {
   border-radius: 1rem;
 }
 
+// Remove arrows from input type="number"
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
@@ -141,7 +141,6 @@ button {
   background-color: var(--primary);
   padding: 0px 20px;
   color: white;
-  // font-size: var(--sm-text-size);
   border-radius: 10px;
   border: none;
   outline: none;
