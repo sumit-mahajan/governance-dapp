@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useConnection } from '../../connection_provider';
 import { Box } from '../Box';
 import Chip from '../chip/Chip';
@@ -9,7 +9,7 @@ function Navbar() {
     const { connectionState, setConnectionState, connectWallet } = useConnection();
     const { web3, accounts, networkName } = connectionState;
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Select proper nav-option on load
@@ -36,11 +36,11 @@ function Navbar() {
                 <div className="nav-menu">
                     <Box width="70" />
 
-                    <div id="e" onClick={() => { history.push('/') }} className="nav-option">Exchange</div>
+                    <div id="e" onClick={() => { navigate('/') }} className="nav-option">Exchange</div>
 
                     <Box width="20" />
 
-                    <div id="g" onClick={() => { history.push('/governance') }} className="nav-option">Governance</div>
+                    <div id="g" onClick={() => { navigate('/governance') }} className="nav-option">Governance</div>
                 </div>
 
                 <div className="nav-btn-flex">
@@ -49,7 +49,9 @@ function Navbar() {
                     <Box width="20" />
 
                     {accounts.length > 0 ?
-                        <Chip bgColor="var(--accent)" textColor="white" content={accounts[0]} /> :
+                        <Chip bgColor="var(--accent)" textColor="white" content={
+                            accounts[0].substring(0, 5) + '...' + accounts[0].substring(accounts[0].length - 3, accounts[0].length)
+                        } /> :
                         <Chip
                             onclick={connectWallet}
                             bgColor="var(--accent)" textColor="white"

@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useConnection } from './connection_provider';
 
 import Navbar from "./components/navbar/Navbar";
@@ -28,14 +28,14 @@ function App() {
 
   return (
     <div>
-      <BrowserRouter history={History}>
+      <BrowserRouter>
         <Navbar />
-        <Switch>
-          <Route path="/governance/create_proposal" component={CreateProposal} />
-          <Route path="/governance/proposal/:index" component={ProposalPage} />
-          <Route path="/governance" component={GovernancePage} />
-          <Route path="/" component={ExchangePage} />
-        </Switch>
+        <Routes>
+          <Route path="/governance/create_proposal" element={<CreateProposal />} />
+          <Route path="/governance/proposal/:index" element={<ProposalPage />} />
+          <Route path="/governance" element={<GovernancePage />} />
+          <Route path="/" element={<ExchangePage />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

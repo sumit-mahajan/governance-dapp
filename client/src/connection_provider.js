@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import GovToken from "./contracts/GovToken.json";
 import Web3 from "web3";
 
+// geth attach ipc:\\.\pipe\geth.ipc
 const ConnectionContext = React.createContext();
 
 export function useConnection() {
@@ -11,7 +12,7 @@ export function useConnection() {
 export function ConnectionProvider(props) {
     const [connectionState, setConnectionState] = useState({
         web3: null,
-        networkName: 'Localhost',
+        networkName: 'Localhost 7545',
         accounts: [],
         govContract: null,
         errors: null,
@@ -27,7 +28,7 @@ export function ConnectionProvider(props) {
 
             const govContract = await createGovInstance(web3);
 
-            setConnectionState({ ...connectionState, web3, govContract, networkName: 'Localhost' });
+            setConnectionState({ ...connectionState, web3, govContract, networkName: 'Localhost 7545' });
         } catch (e) {
             console.log("useConnection Error ", e);
             setConnectionState({ ...connectionState, errors: e });

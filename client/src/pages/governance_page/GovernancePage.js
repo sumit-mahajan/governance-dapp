@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import './governance_page.scss';
 import Loading from '../../components/loading/Loading';
 import { Box } from '../../components/Box';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useConnection } from '../../connection_provider';
 
 function GovernancePage() {
@@ -12,7 +12,7 @@ function GovernancePage() {
 
     const [isLoading, setLoading] = useState(false);
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     // List of polls for home page
     const [proposalList, setProposalList] = useState([]);
@@ -34,14 +34,14 @@ function GovernancePage() {
         <div className="g-page">
             <div className="hr-flex">
                 <h3 className="heading">Governance Proposals</h3>
-                <button className="clickable" onClick={() => { history.push('/governance/create_proposal') }}>
+                <button className="clickable" onClick={() => { navigate('/governance/create_proposal') }}>
                     Create Proposal
                 </button>
             </div>
             {/* TODO: Stats here */}
             <div className="p-list">
                 <div className="subtitle">All Proposals</div>
-                <div className="p-list-tile" onClick={() => { history.push('/governance/proposal/2') }}>
+                <div className="p-list-tile" onClick={() => { navigate('/governance/proposal/2') }}>
                     <div className="p-left">
                         <p className="p-title">Redesign UX</p>
                         <Box height="10" />
@@ -53,7 +53,7 @@ function GovernancePage() {
                     </div>
                     <p className="p-status">Voting</p>
                 </div>
-                <div className="p-list-tile" onClick={() => { history.push('/governance/proposal/1') }}>
+                <div className="p-list-tile" onClick={() => { navigate('/governance/proposal/1') }}>
                     <div className="p-left">
                         <p className="p-title">Collateral limit 80%</p>
                         <Box height="10" />
@@ -65,7 +65,7 @@ function GovernancePage() {
                     </div>
                     <p className="p-status">Cancelled</p>
                 </div>
-                <div className="p-list-tile" onClick={() => { history.push('/governance/proposal/2') }}>
+                <div className="p-list-tile" onClick={() => { navigate('/governance/proposal/2') }}>
                     <div className="p-left">
                         <p className="p-title">Add Lending feature</p>
                         <Box height="10" />

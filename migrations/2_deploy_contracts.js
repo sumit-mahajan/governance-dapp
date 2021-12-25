@@ -1,5 +1,5 @@
-var Governance = artifacts.require('./Governance.sol');
+var GovToken = artifacts.require('./GovToken.sol');
 
 module.exports = function (deployer) {
-  deployer.deploy(Governance);
+  deployer.deploy(GovToken);
 };

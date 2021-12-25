@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Box } from '../../components/Box';
 import Loading from '../../components/loading/Loading';
 import { useConnection } from '../../connection_provider';
@@ -9,14 +9,16 @@ function ProposalPage() {
     const { connectionState, setConnectionState } = useConnection();
     const { web3, accounts } = connectionState;
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     // To avoid sending multiple transactions while one is already sent
     const [isTransaction, setTransaction] = useState(false);
 
     return (
         <div className="proposal-page">
-            <div className="back-btn" onClick={() => { history.goBack() }}>Back To Overview</div>
+            <div className="back-btn" onClick={() => {
+                // TODO : navigate.goBack() 
+            }}>← Back To Overview</div>
             <Box height="20" />
             <div className="p-overview hr-flex">
                 <div className="p-left">
@@ -29,7 +31,7 @@ function ProposalPage() {
                     </div>
                 </div>
                 <p className="p-owner">
-                    Owner
+                    Creator
                     0x000...000
                 </p>
             </div>
