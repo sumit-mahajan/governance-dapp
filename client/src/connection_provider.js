@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Governance from "../contracts/Governance.json";
+import GovToken from "./contracts/GovToken.json";
 import Web3 from "web3";
 
 const ConnectionContext = React.createContext();
@@ -37,11 +37,11 @@ export function ConnectionProvider(props) {
     async function createGovInstance(web3) {
         if (web3) {
             const networkId = await web3.eth.net.getId();
-            const deployedNetwork = Governance.networks[networkId];
+            const deployedNetwork = GovToken.networks[networkId];
 
             if (deployedNetwork) {
                 const newInstance = new web3.eth.Contract(
-                    Governance.abi,
+                    GovToken.abi,
                     deployedNetwork.address
                 );
 
@@ -53,19 +53,19 @@ export function ConnectionProvider(props) {
     }
 
     useEffect(() => {
-        // initiate();
+        initiate();
 
-        // // Detect metamask account change
-        // window.ethereum.on('accountsChanged', async function (_accounts) {
-        //     const web3 = await getWeb3();
-        //     const govContract = await createGovInstance(web3);
-        //     setConnectionState({ ...connectionState, web3, accounts: _accounts, govContract });
-        // })
+        // Detect metamask account change
+        window.ethereum.on('accountsChanged', async function (_accounts) {
+            const web3 = await getWeb3();
+            const govContract = await createGovInstance(web3);
+            setConnectionState({ ...connectionState, web3, accounts: _accounts, govContract });
+        })
 
-        // // Detect metamask network change
-        // window.ethereum.on('networkChanged', function (networkId) {
-        //     window.location.reload();
-        // });
+        // Detect metamask network change
+        window.ethereum.on('networkChanged', function (networkId) {
+            window.location.reload();
+        });
     }, []);
 
     const connectWallet = async () => {

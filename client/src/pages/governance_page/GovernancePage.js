@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import './governance_page.scss';
-import Loading from '../../components/utils/loading/Loading';
-import { Box } from '../../components/utils/Box';
-import { useConnection } from '../../components/connection_provider.js';
+import Loading from '../../components/loading/Loading';
+import { Box } from '../../components/Box';
 import { useHistory } from 'react-router';
+import { useConnection } from '../../connection_provider';
 
 function GovernancePage() {
     const { connectionState, setConnectionState } = useConnection();
@@ -16,27 +16,6 @@ function GovernancePage() {
 
     // List of polls for home page
     const [proposalList, setProposalList] = useState([]);
-
-    // async function fetchData() {
-    //     if (appContract != null) {
-    //         setLoading(true);
-
-    //         // Fetch number of polls
-    //         const nPolls = await appContract.methods.nPolls().call();
-
-    //         // Fetch all polls overview
-    //         let tempList = [];
-    //         for (let i = 0; i < nPolls; i++) {
-    //             const poll = await appContract.methods.getPollOverview(i, accounts.length > 0 ? accounts[0] : "0x0000000000000000000000000000000000000000").call();
-    //             poll.index = i;
-    //             poll.isResultAnnounced = new Date(poll.deadline * 1000).getTime() < new Date().getTime()
-    //             tempList.push(poll);
-    //         }
-    //         setProposalList(tempList);
-
-    //         setLoading(false);
-    //     }
-    // }
 
     useEffect(() => {
         // fetchData();
@@ -103,34 +82,6 @@ function GovernancePage() {
             </div>
         </div>
 
-        // <div className="container">
-        //     {/* {accounts !== undefined ? 'Hi ' + accounts[0] : 'Connect'} */}
-        //     <Box height="40" />
-
-        //     <div className='heading'>Here are all the polls</div>
-
-        //     <Box height="40" />
-
-        //     {proposalList.length !== 0 ?
-        //         <div className="poll-grid">
-        //             {proposalList.map((poll, idx) => {
-        //                 return (<div key={idx} className="poll-card clickable" onClick={() => { setConnectionState({ ...connectionState, poll: poll }) }}>
-        //                     <h3 className="title">{poll.title}</h3>
-        //                     <p className="description">{poll.description}</p>
-        //                     <div className="hr-flex">
-        //                         <Chip bgColor={'var(--primary)'} textColor="white" content={poll.pollAddress} />
-        //                         <Box width="10"></Box>
-        //                         <Chip bgColor={poll.isResultAnnounced ? 'red' : 'green'} textColor="white" content={poll.isResultAnnounced ? 'Ended' : 'Live'} />
-        //                     </div>
-        //                     <p className="description">{poll.totalVotes} have voted</p>
-        //                     {poll.isResultAnnounced ? <p className="declared">Results declared</p> : poll.hasUserVoted ? <p className="voted">You have already voted</p> : <div className="vote-div">Vote</div>}
-        //                 </div>);
-        //             })}
-        //         </div>
-        //         : <div className="no-polls">No polls</div>}
-
-        //     <Box height="30" />
-        // </div>
     );
 }
 

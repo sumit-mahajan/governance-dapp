@@ -1,12 +1,12 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useConnection } from './components/connection_provider';
+import { useConnection } from './connection_provider';
 
 import Navbar from "./components/navbar/Navbar";
 import GovernancePage from "./pages/governance_page/GovernancePage";
 import ExchangePage from "./pages/exchange_page/ExchangePage";
 import CreateProposal from "./pages/create_proposal_page/CreateProposal";
-import Loading from "./components/utils/loading/Loading";
+import Loading from "./components/loading/Loading";
 import ProposalPage from "./pages/proposal_page/ProposalPage";
 
 function App() {

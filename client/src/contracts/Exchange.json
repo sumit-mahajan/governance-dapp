@@ -1,9 +1,9 @@
 {
   "contractName": "Exchange",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Exchange.sol\":\"Exchange\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Exchange.sol\":{\"keccak256\":\"0x93257f7b5ecf57748a042ba3f9a9feeaaf4382192c6d5a0dccc6cc347c3ab6c6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fa9d4ea474e092a9ff869d540bc55cfeb11635bf63b592029bc59cc388c6b5aa\",\"dweb:/ipfs/QmdBpfGVLmBDwdHZExnekZy1JPxwqTXbqmAzgeNB6bR8Bj\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220cedf9d490be9455fa68bfcf36643d1c4b23276ea12ad730a9887debf6c06dcdd64736f6c634300080a0033",
-  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220cedf9d490be9455fa68bfcf36643d1c4b23276ea12ad730a9887debf6c06dcdd64736f6c634300080a0033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/Exchange.sol\":\"Exchange\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/Exchange.sol\":{\"keccak256\":\"0x93257f7b5ecf57748a042ba3f9a9feeaaf4382192c6d5a0dccc6cc347c3ab6c6\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fa9d4ea474e092a9ff869d540bc55cfeb11635bf63b592029bc59cc388c6b5aa\",\"dweb:/ipfs/QmdBpfGVLmBDwdHZExnekZy1JPxwqTXbqmAzgeNB6bR8Bj\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220fe1f2c489632eb2d32a66eb0455f59532edc8d5b326adde814a22c694673679564736f6c634300080b0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220fe1f2c489632eb2d32a66eb0455f59532edc8d5b326adde814a22c694673679564736f6c634300080b0033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
@@ -101,11 +101,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.10+commit.fc410830.Emscripten.clang"
+    "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-12T08:07:26.084Z",
+  "updatedAt": "2021-12-23T09:34:07.145Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

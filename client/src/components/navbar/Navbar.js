@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { useConnection } from '../connection_provider';
-import { Box } from '../utils/Box';
-import Chip from '../utils/chip/Chip';
+import { useConnection } from '../../connection_provider';
+import { Box } from '../Box';
+import Chip from '../chip/Chip';
 import './navbar.scss'
 
 function Navbar() {

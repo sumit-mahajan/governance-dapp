@@ -1,9 +1,9 @@
 {
   "contractName": "GovToken",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/GovToken.sol\":\"GovToken\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/GovToken.sol\":{\"keccak256\":\"0x68c200c8f83b640a6770ceb7c62fe3f3dd3ead010b243af4afbd4f45eea357e8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://68254e27e8155a88ee3b4cf7d30e256c8dd0b9aef9f84cd85872928737455d7a\",\"dweb:/ipfs/QmcFTEU1pA63E6fWYmQ8Pw36pZr8uNZD8chPobxTSiRZmr\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220aaba29342959a237d989675718a813f21c0b180c6a82eae11968d59158e3330864736f6c634300080a0033",
-  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220aaba29342959a237d989675718a813f21c0b180c6a82eae11968d59158e3330864736f6c634300080a0033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.11+commit.d7f03943\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/GovToken.sol\":\"GovToken\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/GovToken.sol\":{\"keccak256\":\"0x68c200c8f83b640a6770ceb7c62fe3f3dd3ead010b243af4afbd4f45eea357e8\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://68254e27e8155a88ee3b4cf7d30e256c8dd0b9aef9f84cd85872928737455d7a\",\"dweb:/ipfs/QmcFTEU1pA63E6fWYmQ8Pw36pZr8uNZD8chPobxTSiRZmr\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220adba8668b2aef83d69248d09549fd25020db65f7681e2640ad8f7098fa3fdc1f64736f6c634300080b0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220adba8668b2aef83d69248d09549fd25020db65f7681e2640ad8f7098fa3fdc1f64736f6c634300080b0033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
@@ -101,11 +101,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.8.10+commit.fc410830.Emscripten.clang"
+    "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-12T08:07:26.087Z",
+  "updatedAt": "2021-12-23T09:34:07.151Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { ConnectionProvider } from './components/connection_provider';
+import { ConnectionProvider } from './connection_provider';
 
 // Wrapped in ConnectionProvider to get a global state using context API
 ReactDOM.render(<ConnectionProvider><App /></ConnectionProvider>, document.getElementById('root'));

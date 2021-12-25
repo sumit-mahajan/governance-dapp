@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './exchange_page.scss';
-import Loading from '../../components/utils/loading/Loading';
-import { useConnection } from '../../components/connection_provider.js';
-import { Box } from '../../components/utils/Box';
+import Loading from '../../components/loading/Loading';
+import { Box } from '../../components/Box';
+import { useConnection } from '../../connection_provider';
 
 function ExchangePage() {
     const { connectionState, setConnectionState } = useConnection();
