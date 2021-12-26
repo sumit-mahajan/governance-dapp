@@ -3,6 +3,7 @@ import GovToken from "./contracts/GovToken.json";
 import Web3 from "web3";
 
 // geth attach ipc:\\.\pipe\geth.ipc
+// Mumbai Token Contract Address : 0xF62f221D58fE57C088D27283B0BC516710eC4E0d
 const ConnectionContext = React.createContext();
 
 export function useConnection() {
@@ -12,7 +13,7 @@ export function useConnection() {
 export function ConnectionProvider(props) {
     const [connectionState, setConnectionState] = useState({
         web3: null,
-        networkName: 'Localhost 7545',
+        networkName: "Mumbai Testnet",
         accounts: [],
         govContract: null,
         errors: null,
@@ -23,51 +24,17 @@ export function ConnectionProvider(props) {
 
         try {
             // Use local web3 object by default before user connects metamask
-            const provider = new Web3.providers.HttpProvider("http://127.0.0.1:7545");
+            const provider = new Web3.providers.HttpProvider("https://rpc-mumbai.maticvigil.com");
             const web3 = new Web3(provider);
 
             const govContract = await createGovInstance(web3);
 
-            setConnectionState({ ...connectionState, web3, govContract, networkName: 'Localhost 7545' });
+            setConnectionState({ ...connectionState, web3, govContract, networkName: 'Mumbai Testnet' });
         } catch (e) {
             console.log("useConnection Error ", e);
             setConnectionState({ ...connectionState, errors: e });
         }
     };
-
-    async function createGovInstance(web3) {
-        if (web3) {
-            const networkId = await web3.eth.net.getId();
-            const deployedNetwork = GovToken.networks[networkId];
-
-            if (deployedNetwork) {
-                const newInstance = new web3.eth.Contract(
-                    GovToken.abi,
-                    deployedNetwork.address
-                );
-
-                return newInstance;
-            } else {
-                throw "Use Correct Network";
-            }
-        }
-    }
-
-    useEffect(() => {
-        initiate();
-
-        // Detect metamask account change
-        window.ethereum.on('accountsChanged', async function (_accounts) {
-            const web3 = await getWeb3();
-            const govContract = await createGovInstance(web3);
-            setConnectionState({ ...connectionState, web3, accounts: _accounts, govContract });
-        })
-
-        // Detect metamask network change
-        window.ethereum.on('networkChanged', function (networkId) {
-            window.location.reload();
-        });
-    }, []);
 
     const connectWallet = async () => {
         try {
@@ -80,6 +47,9 @@ export function ConnectionProvider(props) {
 
             // Set networkName for navbar
             switch (networkId) {
+                case 80001:
+                    networkName = "Mumbai Testnet";
+                    break;
                 case 1:
                     networkName = 'Mainnet';
                     break
@@ -116,17 +86,47 @@ export function ConnectionProvider(props) {
         }
     }
 
-    // Method for switching accounts programmatically
-    const switchNetwork = async () => {
-        // await window.ethereum.request({
-        //     method: 'wallet_switchEthereumChain',
-        //     params: [{ chainId: 1337 }],
-        // });
+    async function createGovInstance(web3) {
+        if (web3) {
+            // const networkId = await web3.eth.net.getId();
+            // const deployedNetwork = GovToken.networks[networkId];
+
+            // if (deployedNetwork) {
+            //     const newInstance = new web3.eth.Contract(
+            //         GovToken.abi,
+            //         deployedNetwork.address
+            //     );
+
+            //     return newInstance;
+            // } else {
+            //     throw "Use Correct Network";
+            // }
+            return new web3.eth.Contract(
+                GovToken.abi,
+                "0xF62f221D58fE57C088D27283B0BC516710eC4E0d"
+            );
+        }
     }
+
+    useEffect(() => {
+        initiate();
+
+        // Detect metamask account change
+        window.ethereum.on('accountsChanged', async function (_accounts) {
+            const web3 = await getWeb3();
+            const govContract = await createGovInstance(web3);
+            setConnectionState({ ...connectionState, web3, accounts: _accounts, govContract });
+        })
+
+        // Detect metamask network change
+        window.ethereum.on('networkChanged', function (networkId) {
+            window.location.reload();
+        });
+    }, []);
 
     return (
         <>
-            <ConnectionContext.Provider value={{ connectionState, setConnectionState, connectWallet, switchNetwork }}>
+            <ConnectionContext.Provider value={{ connectionState, setConnectionState, connectWallet }}>
                 {props.children}
             </ConnectionContext.Provider>
         </>

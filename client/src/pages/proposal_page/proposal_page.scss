@@ -1,6 +1,6 @@
 .proposal-page {
   background-color: var(--bg-color);
-  padding: 30px 30rem;
+  padding: 30px var(--page-padding);
 
   .back-btn {
     cursor: pointer;
@@ -25,6 +25,29 @@
     font-size: var(--sm-text-size);
     color: rgba(0,0,0,0.5);
     text-overflow: ellipsis;
+  }
+
+  
+  .options-flex {
+    display: grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+
+    .option {
+      height: 5rem;
+      width: 100%;
+      display: grid;
+      place-content: center;
+      background-color: white;
+      // border: 1px solid var(--accent);
+      border-radius: 10px;
+    }
+
+    .option:hover {
+      transition: transform 100ms linear;
+      border: 1px solid var(--primary);
+      transform: scale(1.05);
+    }
   }
 
   .p-grid {
@@ -103,34 +126,14 @@
   }
 }
 
-// .description {
-//   font-size: var(--text-size);
-//   font-weight: 400;
-// }
-
-// .options-parent {
-//   display: flex;
-//   justify-content: space-between;
-//   gap: 20px;
-// }
+.description {
+  font-size: var(--sm-text-size);
+  color: var(--accent);
+}
   
-// .options-div {
-//   flex: 1;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   height: 100px;
-//   background-color: #f0f0f0;
-//   border-radius: 1rem;
-//   font-size: var(--text-size);
-//   transition: all 750ms;
-//   cursor: pointer;
-// }
-  
-// .selected {
-//   background-color: var(--primary);
-//   color: white;
-//   font-size: calc(1.2 * var(--text-size));
-//   box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.25);
-// }
+.selected {
+  border: 1px solid var(--primary);
+  font-size: calc(1.2 * var(--text-size));
+  box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.25);
+}
   

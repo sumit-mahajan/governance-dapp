@@ -30,34 +30,6 @@
             margin: 0% auto;
         }
 
-        .textfield {
-            position: relative;
-            margin: 10px 0px;
-
-            input {
-                width: 100%;
-                border: 1px solid rgba(0, 0, 0, 0.25);
-                border-radius: 10px;
-                height: 5rem;
-                padding-left: 10px;
-            }
-
-            input, input:focus, input:hover {
-                outline: none;
-            }
-
-            input:focus {
-                border: 1.5px solid rgba(0, 0, 0, 0.5);
-            }
-        }
-
-        .textfield::before {
-            content: attr(data-token);
-            z-index: 1;
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+        
     }
 }

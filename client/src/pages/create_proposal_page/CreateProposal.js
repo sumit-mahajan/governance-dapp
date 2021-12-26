@@ -26,7 +26,7 @@ function CreateProposal(props) {
                     <input id="title" onChange={e => setTitle(e.target.value)} type="text" placeholder="Title of Proposal" />
                 </div>
 
-                <Box height="5"></Box>
+                <Box height="10"></Box>
 
                 <div className="label">Desrcription</div>
                 <div className="textfield">

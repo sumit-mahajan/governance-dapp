@@ -7,12 +7,22 @@ import './proposal_page.scss';
 
 function ProposalPage() {
     const { connectionState, setConnectionState } = useConnection();
-    const { web3, accounts } = connectionState;
+    const { web3, accounts, govContract } = connectionState;
 
     const navigate = useNavigate();
 
     // To avoid sending multiple transactions while one is already sent
     const [isTransaction, setTransaction] = useState(false);
+
+    useEffect(() => {
+        Array.from(document.querySelectorAll('.option')).forEach((option) => {
+            option.addEventListener('click', () => {
+                // TODO: Set selected state
+                document.querySelector('.selected') && document.querySelector('.selected').setAttribute('class', 'option')
+                option.classList.add('selected')
+            })
+        })
+    }, [])
 
     return (
         <div className="proposal-page">
@@ -35,7 +45,24 @@ function ProposalPage() {
                     0x000...000
                 </p>
             </div>
-            {/* TODO: Show Vote options */}
+
+            <Box height="30" />
+
+            <div className="options-flex">
+                <div className="option"><div>Yea</div></div>
+                <div className="option"><div>Nay</div></div>
+            </div>
+
+            <Box height="20" />
+
+            <div className="options-flex">
+                <div className="textfield">
+                    <input type="number" placeholder="Number of Votes" />
+                </div>
+
+                <button className="clickable">Vote</button>
+            </div>
+
             <div className="p-grid">
                 <div className="votes-card">
                     <div className="card-title">
@@ -90,7 +117,15 @@ function ProposalPage() {
                     </div>
                 </div>
             </div>
-            <p className="heading">Details</p>
+            <div className="hr-flex">
+                <button className='clickable'>Cancel Proposal</button>
+                <button className='clickable'>Declare Result</button>
+            </div>
+            <Box height="30" />
+            <p className="heading">Description</p>
+            <Box height="20" />
+            <p className='description'>Sample description</p>
+            <Box height="20" />
         </div>
     );
 }

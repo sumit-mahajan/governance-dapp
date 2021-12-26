@@ -8,6 +8,7 @@
   /* Sizes */
   --root-font-size: 10px;
   --body-padding: 100px;
+  --page-padding: 275px;
   --heading-text-size: 2.5rem;
   --lg-text-size: 2rem;
   --text-size: 1.8rem;
@@ -20,6 +21,7 @@
 @media (max-width: 1280px) {
   :root {
     --body-padding: 20px;
+    --page-padding: 150px;
     --root-font-size: 9px;
   }
 }
@@ -159,4 +161,33 @@ button {
 
 .clickable:active {
   transform: scale(0.97);
+}
+
+.textfield {
+  position: relative;
+
+  input {
+      width: 100%;
+      border: 1px solid rgba(0, 0, 0, 0.25);
+      border-radius: 10px;
+      height: 5rem;
+      padding-left: 10px;
+  }
+
+  input, input:focus, input:hover {
+      outline: none;
+  }
+
+  input:focus {
+      border: 1.5px solid rgba(0, 0, 0, 0.5);
+  }
+}
+
+.textfield::before {
+  content: attr(data-token);
+  z-index: 1;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }

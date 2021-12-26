@@ -34,7 +34,7 @@ function Navbar() {
                 <div className="logo">GovDAO</div>
 
                 <div className="nav-menu">
-                    <Box width="70" />
+                    <Box width="125" />
 
                     <div id="e" onClick={() => { navigate('/') }} className="nav-option">Exchange</div>
 
