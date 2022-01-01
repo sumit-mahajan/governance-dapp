@@ -10,7 +10,7 @@
   "sourceMap": "60:20:0:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "60:20:0:-:0;;;;;",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.6;\r\n\r\ncontract Exchange {}\r\n",
-  "sourcePath": "F:\\ethdev\\governance\\contracts\\Exchange.sol",
+  "sourcePath": "C:\\Users\\ankur\\Desktop\\Projects\\governance-dapp\\contracts\\Exchange.sol",
   "ast": {
     "absolutePath": "project:/contracts/Exchange.sol",
     "exportedSymbols": {
@@ -104,8 +104,8 @@
     "version": "0.8.11+commit.d7f03943.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-25T16:56:45.165Z",
+  "schemaVersion": "3.4.4",
+  "updatedAt": "2022-01-01T13:48:06.458Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

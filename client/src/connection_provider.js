@@ -103,7 +103,8 @@ export function ConnectionProvider(props) {
             // }
             return new web3.eth.Contract(
                 GovToken.abi,
-                "0xF62f221D58fE57C088D27283B0BC516710eC4E0d"
+                //"0xF62f221D58fE57C088D27283B0BC516710eC4E0d"
+                "0x6EB7f341eBc06dF6b78413a5B448795D9A9Cb833"
             );
         }
     }

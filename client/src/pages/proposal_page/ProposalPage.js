@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+import {useParams, useNavigate } from 'react-router';
 import { Box } from '../../components/Box';
 import Loading from '../../components/loading/Loading';
 import { useConnection } from '../../connection_provider';
@@ -13,23 +13,6 @@ struct Vote {
     }
 
 */
-var blockchaindata = [ 
-     { voterAddress:"useraddress" , support:true, votes:80} ,
-     { voterAddress:"useraddress" , support:false, votes:20} ,
-     { voterAddress:"useraddress" , support:false, votes:100} ,
-     { voterAddress:"useraddress" , support:true, votes:80} ,
-     { voterAddress:"useraddress" , support:false, votes:100} ,
-     { voterAddress:"useraddress" , support:true, votes:200} ,
-     { voterAddress:"useraddress" , support:false, votes:100} ,
-     { voterAddress:"useraddress" , support:true, votes:150} ,
-     { voterAddress:"useraddress" , support:true, votes:142} ,
-     { voterAddress:"useraddress" , support:true, votes:100} ,
-     { voterAddress:"useraddress" , support:false, votes:125} ,
-     { voterAddress:"useraddress" , support:true, votes:74} ,
-     { voterAddress:"useraddress" , support:true, votes:100} ,
-]
-
-
 
 //function to create a address tile
 function createAddressTile(arg){
@@ -45,7 +28,7 @@ function createAddressTile(arg){
 function getTotalVotes(blockchaindata) {
      let totalVotesCount = 0 ;
      blockchaindata.forEach( function(currentObject){
-         totalVotesCount+= currentObject.votes ;
+         totalVotesCount+= parseInt(currentObject.votes) ;
      } )
      return totalVotesCount ;
 }
@@ -56,8 +39,7 @@ function partition(array, isValid) {
     }, [[], []]);
 }
   
-const [blockchaindata_for, blockchaindata_against] = partition(blockchaindata, (e) => e.support === true );
-
+// filter blockchain data based on support attribute
 
 
 function ProposalPage() {
@@ -65,11 +47,27 @@ function ProposalPage() {
     const { web3, accounts, govContract } = connectionState;
 
     const navigate = useNavigate();
-
+    // using react params
+    const params = useParams();
     // To avoid sending multiple transactions while one is already sent
     const [isTransaction, setTransaction] = useState(false);
-
-    useEffect(() => {
+    // const [blockChainData , setBlockChainData ] = useState([
+    //     { voterAddress:"useraddress" , support:true, votes:90} ,
+    //     { voterAddress:"useraddress" , support:false, votes:70} ,
+    //     { voterAddress:"useraddress" , support:false, votes:100} ,
+    //     { voterAddress:"useraddress" , support:true, votes:80} ,
+    //     { voterAddress:"useraddress" , support:false, votes:100} ,
+    //     { voterAddress:"useraddress" , support:true, votes:200} ,
+    //     { voterAddress:"useraddress" , support:false, votes:100} ,
+    //     { voterAddress:"useraddress" , support:true, votes:150} ,
+    //     { voterAddress:"useraddress" , support:true, votes:142} ,
+    //     { voterAddress:"useraddress" , support:true, votes:100} ,
+    //     { voterAddress:"useraddress" , support:false, votes:125} ,
+    //     { voterAddress:"useraddress" , support:true, votes:74} ,
+    //     { voterAddress:"useraddress" , support:true, votes:100} ,
+    // ])
+    const [blockChainData , setBlockChainData ] = useState([]) ;
+    useEffect( () => {
         Array.from(document.querySelectorAll('.option')).forEach((option) => {
             option.addEventListener('click', () => {
                 // TODO: Set selected state
@@ -77,7 +75,36 @@ function ProposalPage() {
                 option.classList.add('selected')
             })
         })
+        async function fetchData() {
+            let temp = await govContract.methods.getVotes(
+                parseInt(params.index)
+            ).call() ;
+            setBlockChainData(temp) ;
+            console.log(temp);
+        }
+
+        fetchData()
+        
     }, [])
+    
+    // code start here 
+    
+    
+    //get blockChainData from network
+    // const tempdata = await govContract.methods.getVotes(
+    //     parseInt(params.index)
+    // ).call() ;
+    // console.log(tempdata);
+
+    var [ _for_data , set_for_data] = useState([]) ;
+    var [ _against_data , set_against_data ] = useState([]) ;
+     
+    const [filterForData , filterAgainstData] =  partition(blockChainData, (e) => e.support === true );
+    //set_for_data(filterForData) ;
+    //set_against_data(filterAgainstData) ;
+    //code ends here
+
+
 
     return (
         <div className="proposal-page">
@@ -123,19 +150,19 @@ function ProposalPage() {
                     <div className="card-title">
                         <div className="hr-flex">
                             <p>For</p>
-                            <p> { getTotalVotes(blockchaindata_for)} votes</p>
+                            <p> { getTotalVotes(filterForData)} votes</p>
                         </div>
                         <Box height="15" />
                         <div className="progress-bar"></div>
                     </div>
                     
                     <div className="card-subtitle hr-flex">
-                        <p className="subtitle"> {blockchaindata_for.length} addresses</p>
+                        <p className="subtitle"> {filterForData.length} addresses</p>
                         <p className="subtitle">votes</p>
                     </div>
 
                    {
-                      blockchaindata_for.map(createAddressTile)  
+                      filterForData.map(createAddressTile)  
                    }
                      
  
@@ -145,17 +172,17 @@ function ProposalPage() {
                     <div className="card-title">
                         <div className="hr-flex">
                             <p>Against</p>
-                            <p> { getTotalVotes(blockchaindata_against)} votes</p>
+                            <p> { getTotalVotes(filterAgainstData)} votes</p>
                         </div>
                         <Box height="15" />
                         <div className="progress-bar"></div>
                     </div>
                     <div className="card-subtitle hr-flex">
-                        <p className="subtitle">{blockchaindata_against.length} addresses</p>
+                        <p className="subtitle">{filterAgainstData.length} addresses</p>
                         <p className="subtitle">votes</p>
                     </div>
                     { 
-                        blockchaindata_against.map(createAddressTile) 
+                        filterAgainstData.map(createAddressTile) 
                     }
                 </div>
             </div>
