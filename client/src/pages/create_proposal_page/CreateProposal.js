@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router';
 import "./create_proposal.scss";
 import { Box } from '../../components/Box';
 import Loading from '../../components/loading/Loading';
@@ -10,27 +11,33 @@ function CreateProposal(props) {
     // Poll Data input 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
- //   useeffect 
+    const [isLoading, setLoading] = useState(false);
     // For validation errors
     const [error, setError] = useState({ title: null, description: null, button: null });
 
     // To avoid sending multiple transactions while one is already sent
     const [isTransaction, setTransaction] = useState(false);
     
+    const navigate = useNavigate();
+
     //let tempList = [];
 
     const handleproposal = async () => {
         setError({});
         if (title == "" || description=="") {
             setError({ title: "Please fill title", description:"Please fill description"});
+            alert("Fill both title and description");
             return;
         }
+        setLoading(true);
         try {
-           let option = await govContract.methods.propose(title,description).send({from:accounts[0]});
-           //tempList.push(option);
-          } catch (e) {
+            let option = await govContract.methods.propose(title,description).send({from:accounts[0]});
+            navigate("/governance")
+            //tempList.push(option);
+        } catch (e) {
             console.log(e);
         }
+        setLoading(false);
     };
 
     return (
