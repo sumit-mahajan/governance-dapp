@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.6;
 
+import "./Exchange.sol";
+
 interface IERC20 {
     function totalSupply() external view returns (uint256);
 
@@ -45,14 +47,17 @@ contract GovToken is IERC20 {
 
     mapping(address => mapping(address => uint256)) allowed;
 
-    uint256 _totalSupply = 10000;
+    uint256 _totalSupply = 100000;
     address public creator;
+    address public exchangeAddress;
 
     using SafeMath for uint256;
 
     constructor() {
         balances[msg.sender] = (_totalSupply * 20) / 100;
         balances[address(this)] = (_totalSupply * 40) / 100;
+        exchangeAddress = address(new Exchange(address(this), 100000000000000)); // price is 0.0001 eth i.e. 1eth = 10000 tokens
+        balances[exchangeAddress] = (_totalSupply * 40) / 100;
         creator = msg.sender;
     }
 
@@ -173,11 +178,11 @@ contract GovToken is IERC20 {
     }
 
     uint256 public proposalCount;
-    uint256 tokensReqdForProposal = 100;
-    uint256 declaringResultReward = 50;
+    uint256 tokensReqdForProposal = 1000;
+    uint256 declaringResultReward = 500;
 
     function quorumVotes() public pure returns (uint256) {
-        return 300;
+        return 3000;
     }
 
     /// @notice The total number of proposals

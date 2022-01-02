@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import GovToken from "./contracts/GovToken.json";
+import Exchange from "./contracts/Exchange.json";
 import Web3 from "web3";
 
 // geth attach ipc:\\.\pipe\geth.ipc
@@ -16,6 +17,7 @@ export function ConnectionProvider(props) {
         networkName: "Mumbai Testnet",
         accounts: [],
         govContract: null,
+        exchangeContract: null,
         errors: null,
     });
 
@@ -28,8 +30,9 @@ export function ConnectionProvider(props) {
             const web3 = new Web3(provider);
 
             const govContract = await createGovInstance(web3);
+            const exchangeContract = await createExchangeInstance(web3);
 
-            setConnectionState({ ...connectionState, web3, govContract, networkName: 'Mumbai Testnet' });
+            setConnectionState({ ...connectionState, web3, govContract, exchangeContract, networkName: 'Mumbai Testnet' });
         } catch (e) {
             console.log("useConnection Error ", e);
             setConnectionState({ ...connectionState, errors: e });
@@ -78,8 +81,9 @@ export function ConnectionProvider(props) {
             const accounts = await web3.eth.getAccounts();
 
             const govContract = await createGovInstance(web3);
+            const exchangeContract = await createExchangeInstance(web3);
 
-            setConnectionState({ ...connectionState, web3, networkName, accounts, govContract });
+            setConnectionState({ ...connectionState, web3, networkName, accounts, govContract, exchangeContract });
         } catch (e) {
             console.log("useConnection Error ", e);
             setConnectionState({ ...connectionState, errors: e });
@@ -104,7 +108,30 @@ export function ConnectionProvider(props) {
             return new web3.eth.Contract(
                 GovToken.abi,
                 //"0xF62f221D58fE57C088D27283B0BC516710eC4E0d"
-                "0x6EB7f341eBc06dF6b78413a5B448795D9A9Cb833"
+                // "0x6EB7f341eBc06dF6b78413a5B448795D9A9Cb833"
+                "0xd0583d07b60490a248fA3Db9330c7642086c60eD"
+            );
+        }
+    }
+
+    async function createExchangeInstance(web3) {
+        if (web3) {
+            // const networkId = await web3.eth.net.getId();
+            // const deployedNetwork = GovToken.networks[networkId];
+
+            // if (deployedNetwork) {
+            //     const newInstance = new web3.eth.Contract(
+            //         GovToken.abi,
+            //         deployedNetwork.address
+            //     );
+
+            //     return newInstance;
+            // } else {
+            //     throw "Use Correct Network";
+            // }
+            return new web3.eth.Contract(
+                Exchange.abi,
+                "0xF95050fdE7496e202B418F6AE19ae0f91FAcd310"
             );
         }
     }
