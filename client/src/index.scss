@@ -52,12 +52,13 @@
   font-size: var(--text-size);
   font-weight: 400;
   font-family: 'Circular', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  width: 100%; /* For ignorng scrollbar width*/
+  width: 100%;
+  /* For ignorng scrollbar width*/
   overflow-x: hidden;
 }
 
@@ -89,6 +90,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 /* Firefox */
 input[type=number] {
   -moz-appearance: textfield;
@@ -120,7 +122,7 @@ a:visited {
   top: 0%;
   height: 100vh;
   width: 100vw;
-  background-color: rgba(255,255,255,0.75);
+  background-color: rgba(255, 255, 255, 0.75);
 
   .center-item {
     width: min-content;
@@ -135,6 +137,12 @@ a:visited {
 .hr-flex {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.hr-flex-start {
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -167,19 +175,21 @@ button {
   position: relative;
 
   input {
-      width: 100%;
-      border: 1px solid rgba(0, 0, 0, 0.25);
-      border-radius: 10px;
-      height: 5rem;
-      padding-left: 10px;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    height: 5rem;
+    padding-left: 10px;
   }
 
-  input, input:focus, input:hover {
-      outline: none;
+  input,
+  input:focus,
+  input:hover {
+    outline: none;
   }
 
   input:focus {
-      border: 1.5px solid rgba(0, 0, 0, 0.5);
+    border: 1.5px solid rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -190,4 +200,15 @@ button {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.error {
+  text-align: center;
+  color: red;
+  font-size: var(--xs-text-size);
+}
+
+.center {
+  text-align: center;
+  font-size: var(--xs-text-size);
 }

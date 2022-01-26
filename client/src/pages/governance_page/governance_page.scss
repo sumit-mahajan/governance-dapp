@@ -1,16 +1,17 @@
 .g-page {
     background-color: var(--bg-color);
     padding: 30px var(--page-padding);
+    min-height: 100vh;
 
     .p-list {
         margin: 30px 0px;
         width: 100%;
         background-color: white;
         border-radius: 10px;
-        box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, 
-                    rgba(0, 0, 0, 0.04) 0px 4px 8px, 
-                    rgba(0, 0, 0, 0.04) 0px 16px 24px, 
-                    rgba(0, 0, 0, 0.01) 0px 24px 32px;
+        box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px,
+            rgba(0, 0, 0, 0.04) 0px 4px 8px,
+            rgba(0, 0, 0, 0.04) 0px 16px 24px,
+            rgba(0, 0, 0, 0.01) 0px 24px 32px;
 
         .subtitle {
             padding: 20px 25px;
@@ -49,10 +50,11 @@
 
         .p-date {
             font-size: var(--xs-text-size);
-            color: rgba(0,0,0,0.5);
+            color: rgba(0, 0, 0, 0.5);
         }
+
         .p-result {
-            width: 55px;
+            width: 65px;
             font-size: var(--xs-text-size);
             color: var(--res-color);
             border: 0.5px solid var(--res-color);

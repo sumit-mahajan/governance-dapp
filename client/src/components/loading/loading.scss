@@ -28,14 +28,20 @@
     animation-delay: 666ms;
 }
 
+.loading-text {
+    margin-top: 5rem;
+}
+
 @keyframes load-anim {
-    0%{
+    0% {
         transform: scale(1);
     }
-    17%{
+
+    17% {
         transform: scale(1.5);
     }
-    33%{
+
+    33% {
         transform: scale(1);
     }
 }

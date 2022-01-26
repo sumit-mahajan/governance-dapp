@@ -1,37 +1,35 @@
-import React, { PureComponent, useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
+import React, { useEffect, useState } from 'react';
 import './governance_page.scss';
 import Loading from '../../components/loading/Loading';
 import { Box } from '../../components/Box';
 import { useNavigate } from 'react-router';
 import { useConnection } from '../../connection_provider';
-import { getStepLabelUtilityClass } from '@mui/material';
 
 function GovernancePage() {
-    const { connectionState, setConnectionState } = useConnection();
+    const { connectionState } = useConnection();
     const { accounts, govContract } = connectionState;
 
     const [isLoading, setLoading] = useState(false);
-    const stateValues = ["Live","Revoked","Passed","Failed"];
+    const stateValues = ["Live", "Revoked", "Passed", "Failed"];
     const navigate = useNavigate();
 
     // List of polls for home page
     const [proposalList, setProposalList] = useState([]);
 
     const getStatus = (state) => {
-        if(state == 'Live') return 'Voting'
-        if(state == 'Revoked') return 'Cancelled'
-        if(state == 'Passed') return 'Accepted'
-        if(state == 'Failed') return 'Rejected'
+        if (state === 'Live') return 'Voting'
+        if (state === 'Revoked') return 'Cancelled'
+        if (state === 'Passed') return 'Accepted'
+        if (state === 'Failed') return 'Rejected'
     }
 
     async function fetchData() {
         if (govContract != null) {
             setLoading(true);
-                
+
             // Fetch number of polls
             const proposalCount = await govContract.methods.proposalCount().call();
-    
+
             // Fetch all polls overview
             let tempList = [];
 
@@ -43,23 +41,18 @@ function GovernancePage() {
                 tempList.push(proposal);
             }
             setProposalList(tempList);
-    
+
             setLoading(false);
         }
     }
 
-
+    // On load, refresh and accounts changed Refetch
     useEffect(() => {
         fetchData();
-    }, []);
-
-    // On accounts changed Refetch
-    useEffect(() => {
-        fetchData();
-    }, [accounts]);
+    }, [accounts, govContract]);
 
     if (isLoading) {
-        return <Loading page="home" />;
+        return <Loading text='Loading All Proposals' />;
     }
 
     return (
@@ -70,26 +63,24 @@ function GovernancePage() {
                     Create Proposal
                 </button>
             </div>
-            {/* TODO: Stats here */}
             <div className="p-list">
-                <div className="subtitle">All Proposals</div>
+                {proposalList.length === 0 ?
+                    <div className='subtitle' style={{ textAlign: 'center' }}>No Proposals Created</div>
+                    : <div className="subtitle">All Proposals</div>}
                 {proposalList.map((proposal, idx) => (
-                <div className="p-list-tile" onClick={() => { navigate(`/governance/proposal/${proposal.index}`) }}>
-                    <div className="p-left">
-                        <p className="p-title">{proposal.title}</p>
-                        <Box height="10" />
-                        <div className="hr-flex">
-                            {/* <p className="p-result" style={{ '--res-color': 'var(--primary)' }}>{proposal.state}</p> */}
-                            <p className="p-result" style={ (proposal.state == 'Live' || proposal.state == 'Passed') ? { '--res-color': 'var(--primary)' }: {'--res-color': 'rgba(0,0,0,0.5)'}}>{proposal.state}</p>
-                            <Box width="20" />
-                            <p className="p-date">{ new Date(parseInt(proposal.dateOfCreation) * 1000).toLocaleString('default', {month: 'long', day: '2-digit', year:'numeric'})  }</p>
+                    <div key={idx} className="p-list-tile" onClick={() => { navigate(`/governance/proposal/${proposal.index}`) }}>
+                        <div className="p-left">
+                            <p className="p-title">{proposal.title}</p>
+                            <Box height="10" />
+                            <div className="hr-flex-start">
+                                <p className="p-result" style={(proposal.state === 'Live' || proposal.state === 'Passed') ? { '--res-color': 'var(--primary)' } : { '--res-color': 'rgba(0,0,0,0.5)' }}>{proposal.state}</p>
+                                <Box width="20" />
+                                <p className="p-date">{new Date(parseInt(proposal.dateOfCreation) * 1000).toLocaleString('default', { month: 'long', day: '2-digit', year: 'numeric' })}</p>
+                            </div>
                         </div>
+                        <p className="p-status">{getStatus(proposal.state)}</p>
                     </div>
-                    <p className="p-status">{getStatus(proposal.state)}</p>
-                </div>
                 ))}
-                <div className="p-list-tile"></div>
-                <div className="p-list-tile"></div>
             </div>
         </div>
     );

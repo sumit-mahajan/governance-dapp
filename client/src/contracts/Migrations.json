@@ -17,8 +17,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -31,8 +30,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -451,7 +449,7 @@
   "sourceMap": "60:353:2:-:0;;;237:51;;;;;;;;;-1:-1:-1;262:5:2;:18;;-1:-1:-1;;;;;;262:18:2;270:10;262:18;;;60:353;;;;;;",
   "deployedSourceMap": "60:353:2:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;114:39;;;;;;;;;160:25:3;;;148:2;133:18;114:39:2;;;;;;;;87:20;;;;;-1:-1:-1;;;;;87:20:2;;;;;;-1:-1:-1;;;;;360:32:3;;;342:51;;330:2;315:18;87:20:2;196:203:3;296:114:2;;;;;;:::i;:::-;;:::i;:::-;;;213:5;;-1:-1:-1;;;;;213:5:2;199:10;:19;195:26;;;366:24:::1;:36:::0;;;195:26;296:114;:::o;404:180:3:-;463:6;516:2;504:9;495:7;491:23;487:32;484:52;;;532:1;529;522:12;484:52;-1:-1:-1;555:23:3;;404:180;-1:-1:-1;404:180:3:o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.6;\r\n\r\ncontract Migrations {\r\n    address public owner;\r\n    uint256 public last_completed_migration;\r\n\r\n    modifier restricted() {\r\n        if (msg.sender == owner) _;\r\n    }\r\n\r\n    constructor() {\r\n        owner = msg.sender;\r\n    }\r\n\r\n    function setCompleted(uint256 completed) public restricted {\r\n        last_completed_migration = completed;\r\n    }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\AKASH\\Desktop\\AK\\Academics\\SEMVII\\BTC\\Project\\gov-dapp2\\governance-dapp\\contracts\\Migrations.sol",
+  "sourcePath": "F:\\ethdev\\governance\\contracts\\Migrations.sol",
   "ast": {
     "absolutePath": "project:/contracts/Migrations.sol",
     "exportedSymbols": {
@@ -1264,13 +1262,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x6162A2EE004491B5b5E84A1b8E08345eD6695266",
-      "transactionHash": "0x846719bcecf587734f1c258c234f5f88f0c96c484989a4c3d4a84d5019664bdf"
+      "address": "0xde7a21b5799565d55d49A9120b308A6126c21d85",
+      "transactionHash": "0x2be10a81cc7b7df9eddfe2cee2aa27a77ab8976155ba642680f9e7e46ed52453"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-02T06:54:24.917Z",
-  "networkType": "ethereum",
+  "updatedAt": "2022-01-26T17:28:46.196Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

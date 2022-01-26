@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { useConnection } from '../../connection_provider';
+import { supportedNetworks, useConnection } from '../../connection_provider';
 import { Box } from '../Box';
 import Chip from '../chip/Chip';
 import './navbar.scss'
 
 function Navbar() {
-    const { connectionState, setConnectionState, connectWallet } = useConnection();
-    const { web3, accounts, networkName } = connectionState;
+    const { connectionState, connectWallet } = useConnection();
+    const { accounts, chainId } = connectionState;
 
     const navigate = useNavigate();
 
@@ -44,7 +44,7 @@ function Navbar() {
                 </div>
 
                 <div className="nav-btn-flex">
-                    <Chip bgColor="var(--accent)" textColor="white" content={networkName} />
+                    <Chip bgColor="var(--accent)" textColor="white" content={supportedNetworks[chainId].name} />
 
                     <Box width="20" />
 

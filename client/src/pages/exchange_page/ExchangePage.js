@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import './exchange_page.scss';
 import Loading from '../../components/loading/Loading';
 import { Box } from '../../components/Box';
-import { useConnection } from '../../connection_provider';
+import { supportedNetworks, useConnection } from '../../connection_provider';
 
 function ExchangePage() {
-    const { connectionState, setConnectionState } = useConnection();
-    const { accounts, govContract, exchangeContract } = connectionState;
+    const { connectionState } = useConnection();
+    const { chainId, accounts, govContract, exchangeContract } = connectionState;
 
     const [isLoading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     const ethToGov = 100;
     const [token1, setToken1] = useState({
@@ -29,7 +30,6 @@ function ExchangePage() {
         const t = ethField.value;
         ethField.value = govField.value;
         govField.value = t;
-        console.log( exchangeContract.address )
     }
 
     const onInputChange = (event) => {
@@ -41,40 +41,46 @@ function ExchangePage() {
             ethField.value = govField.value / ethToGov;
         }
     }
-    
-    const handleExchange = async(e) => {
+
+    const handleExchange = async (e) => {
         const type = e.target.textContent;
-        
-        if(type === 'Buy GOV') {
+        setError("");
+
+        if (type === 'Buy GOV') {
             // Buy tokens
             const ethField = document.getElementById("MATIC").value;
             const govField = document.getElementById("GOV").value;
 
-            if(govField < 0.01) {
-                alert("Minimum of 0.01 GOV has to be bought");
+            if (govField < 0.01) {
+                setError("Minimum of 0.01 GOV has to be bought");
                 return;
             }
+
             setLoading(true);
             try {
-                const response = await exchangeContract.methods.buy(parseInt(parseFloat(govField) * 10 ** 2)).send({from: accounts[0], value: parseInt(parseFloat(ethField) * 10**18)});
+                await exchangeContract.methods.buy(parseInt(parseFloat(govField) * 10 ** 2)).send({ from: accounts[0], value: parseInt(parseFloat(ethField) * 10 ** 18) });
             } catch (error) {
                 console.log('Error-Exchange-BuyGov', error.message)
             }
             setLoading(false);
         } else {
             // Sell tokens
-            const ethField = document.getElementById("MATIC").value;
+            // const ethField = document.getElementById("MATIC").value;
             const govField = document.getElementById("GOV").value;
 
-            if(govField.value < 0.01) {
-                alert("Minimum of 0.01 GOV has to be sold");
+            if (govField.value < 0.01) {
+                setError("Minimum of 0.01 GOV has to be sold");
                 return;
             }
+
             setLoading(true);
             try {
-                const approve = await govContract.methods.approve("0xF95050fdE7496e202B418F6AE19ae0f91FAcd310", parseInt(parseFloat(govField) * 10**2)).send({from: accounts[0]});
+                await govContract.methods.approve(
+                    supportedNetworks[chainId].exchangeAddress,
+                    parseInt(parseFloat(govField) * 10 ** 2)
+                ).send({ from: accounts[0] });
 
-                const response = await exchangeContract.methods.sell(parseInt(parseFloat(govField) * 10 ** 2)).send({from: accounts[0]});
+                await exchangeContract.methods.sell(parseInt(parseFloat(govField) * 10 ** 2)).send({ from: accounts[0] });
             } catch (error) {
                 console.log('Error-Exchange-SellGov', error.message)
             }
@@ -110,7 +116,14 @@ function ExchangePage() {
 
                 <Box height="30"></Box>
 
-                <button className="clickable" onClick={handleExchange}>{token1.symbol == "MATIC" ? "Buy GOV" : "Sell GOV"}</button>
+                <button className="clickable" onClick={handleExchange}>{token1.symbol === "MATIC" ? "Buy GOV" : "Sell GOV"}</button>
+
+                {error !== '' && <Box height="10" />}
+                <p className="error">{error}</p>
+
+                <Box height="20"></Box>
+
+                <p className="center">Import GOV token to metamask {supportedNetworks[chainId].govAddress}</p>
             </div>
         </div>
     );

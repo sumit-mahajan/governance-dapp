@@ -1,33 +1,35 @@
 .proposal-page {
   background-color: var(--bg-color);
   padding: 30px var(--page-padding);
+  min-height: 100vh;
 
   .back-btn {
     cursor: pointer;
   }
 
-  .p-date, .back-btn {
+  .p-date,
+  .back-btn {
     font-size: var(--sm-text-size);
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
   }
 
   .p-result {
-      width: 65px;
-      font-size: var(--sm-text-size);
-      color: var(--res-color);
-      border: 0.5px solid var(--res-color);
-      text-align: center;
-      padding: 2px 0px;
-      border-radius: 2px;
+    width: 75px;
+    font-size: var(--sm-text-size);
+    color: var(--res-color);
+    border: 0.5px solid var(--res-color);
+    text-align: center;
+    padding: 2px 0px;
+    border-radius: 2px;
   }
 
   .p-owner {
     font-size: var(--sm-text-size);
-    color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
     text-overflow: ellipsis;
   }
 
-  
+
   .options-flex {
     display: grid;
     grid-gap: 30px;
@@ -61,10 +63,10 @@
       width: 100%;
       background-color: white;
       border-radius: 10px;
-      box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, 
-                  rgba(0, 0, 0, 0.04) 0px 4px 8px, 
-                  rgba(0, 0, 0, 0.04) 0px 16px 24px, 
-                  rgba(0, 0, 0, 0.01) 0px 24px 32px;
+      box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px,
+        rgba(0, 0, 0, 0.04) 0px 4px 8px,
+        rgba(0, 0, 0, 0.04) 0px 16px 24px,
+        rgba(0, 0, 0, 0.01) 0px 24px 32px;
     }
 
     .card-title {
@@ -94,7 +96,7 @@
 
       .subtitle {
         font-size: var(--xs-text-size);
-        color: rgba(0,0,0,0.5);
+        color: rgba(0, 0, 0, 0.5);
       }
     }
 
@@ -109,11 +111,11 @@
       align-items: center;
 
       p {
-      font-size: var(--xs-text-size);
+        font-size: var(--xs-text-size);
       }
-  }
+    }
 
-  .address-tile::before {
+    .address-tile::before {
       content: "";
       position: absolute;
       top: 0%;
@@ -121,7 +123,7 @@
       width: 100%;
       height: 0.5px;
       background-color: rgba(0, 0, 0, 0.1);
-  }
+    }
 
   }
 }
@@ -130,10 +132,9 @@
   font-size: var(--sm-text-size);
   color: var(--accent);
 }
-  
+
 .selected {
   border: 1px solid var(--primary);
   font-size: calc(1.2 * var(--text-size));
   box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.25);
 }
-  
