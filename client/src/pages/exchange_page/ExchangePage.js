@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './exchange_page.scss';
 import Loading from '../../components/loading/Loading';
 import { Box } from '../../components/Box';
 import { supportedNetworks, useConnection } from '../../connection_provider';
 
 function ExchangePage() {
-    const { connectionState } = useConnection();
+    const { connectionState, connectWallet } = useConnection();
     const { chainId, accounts, govContract, exchangeContract } = connectionState;
 
     const [isLoading, setLoading] = useState(false);
@@ -13,29 +13,39 @@ function ExchangePage() {
 
     const ethToGov = 100;
     const [token1, setToken1] = useState({
-        symbol: "MATIC",
+        symbol: supportedNetworks[chainId].tokenSymbol,
+        type: "primary",
         placeholder: 1
     });
     const [token2, setToken2] = useState({
         symbol: "GOV",
+        type: "gov",
         placeholder: 100
     })
+
+    useEffect(() => {
+        if (token1.type === 'primary') {
+            setToken1({ ...token1, symbol: supportedNetworks[chainId].tokenSymbol })
+        } else {
+            setToken2({ ...token1, symbol: supportedNetworks[chainId].tokenSymbol })
+        }
+    }, [chainId])
 
     const switchTokens = () => {
         const temp = token1;
         setToken1(token2);
         setToken2(temp);
-        const ethField = document.getElementById("MATIC");
-        const govField = document.getElementById("GOV");
+        const ethField = document.getElementById("primary");
+        const govField = document.getElementById("gov");
         const t = ethField.value;
         ethField.value = govField.value;
         govField.value = t;
     }
 
     const onInputChange = (event) => {
-        const ethField = document.getElementById("MATIC");
-        const govField = document.getElementById("GOV");
-        if (event.target.id === "MATIC") {
+        const ethField = document.getElementById("primary");
+        const govField = document.getElementById("gov");
+        if (event.target.id === "primary") {
             govField.value = ethField.value * ethToGov;
         } else {
             ethField.value = govField.value / ethToGov;
@@ -48,8 +58,8 @@ function ExchangePage() {
 
         if (type === 'Buy GOV') {
             // Buy tokens
-            const ethField = document.getElementById("MATIC").value;
-            const govField = document.getElementById("GOV").value;
+            const ethField = document.getElementById("primary").value;
+            const govField = document.getElementById("gov").value;
 
             if (govField < 0.01) {
                 setError("Minimum of 0.01 GOV has to be bought");
@@ -59,14 +69,18 @@ function ExchangePage() {
             setLoading(true);
             try {
                 await exchangeContract.methods.buy(parseInt(parseFloat(govField) * 10 ** 2)).send({ from: accounts[0], value: parseInt(parseFloat(ethField) * 10 ** 18) });
-            } catch (error) {
-                console.log('Error-Exchange-BuyGov', error.message)
+            } catch (e) {
+                if (e.code === 4001) {
+                    setError("Denied Metamask Transaction Signature");
+                } else {
+                    console.log('Error-Exchange-BuyGov', e.message)
+                    setError("Smart Contract Error. See Console");
+                }
             }
             setLoading(false);
         } else {
             // Sell tokens
-            // const ethField = document.getElementById("MATIC").value;
-            const govField = document.getElementById("GOV").value;
+            const govField = document.getElementById("gov").value;
 
             if (govField.value < 0.01) {
                 setError("Minimum of 0.01 GOV has to be sold");
@@ -82,14 +96,19 @@ function ExchangePage() {
 
                 await exchangeContract.methods.sell(parseInt(parseFloat(govField) * 10 ** 2)).send({ from: accounts[0] });
             } catch (error) {
-                console.log('Error-Exchange-SellGov', error.message)
+                if (e.code === 4001) {
+                    setError("Denied Metamask Transaction Signature");
+                } else {
+                    console.log('Error-Exchange-SellGov', error.message)
+                    setError("Smart Contract Error. See Console");
+                }
             }
             setLoading(false);
         }
     }
 
     if (isLoading) {
-        return <Loading page="home" />;
+        return <Loading text="Please Wait" />;
     }
 
     return (
@@ -99,7 +118,7 @@ function ExchangePage() {
                 <div className="label">From</div>
                 <Box height="10" />
                 <div className="textfield" data-token={token1.symbol} >
-                    <input id={token1.symbol} onChange={onInputChange} type="number" placeholder={token1.placeholder} />
+                    <input id={token1.type} onChange={onInputChange} type="number" placeholder={token1.placeholder} />
                 </div>
 
                 <Box height="15"></Box>
@@ -111,12 +130,25 @@ function ExchangePage() {
                 <div className="label">To</div>
                 <Box height="10" />
                 <div className="textfield" data-token={token2.symbol}>
-                    <input id={token2.symbol} onChange={onInputChange} type="number" placeholder={token2.placeholder} />
+                    <input id={token2.type} onChange={onInputChange} type="number" placeholder={token2.placeholder} />
                 </div>
 
                 <Box height="30"></Box>
 
-                <button className="clickable" onClick={handleExchange}>{token1.symbol === "MATIC" ? "Buy GOV" : "Sell GOV"}</button>
+                <button
+                    className="clickable"
+                    onClick={(e) => {
+                        if (accounts.length > 0) {
+                            handleExchange(e)
+                        } else {
+                            connectWallet()
+                        }
+                    }}
+                >
+                    {accounts.length > 0 ?
+                        token1.symbol === supportedNetworks[chainId].tokenSymbol ? "Buy GOV" : "Sell GOV"
+                        : 'Connect Wallet'}
+                </button>
 
                 {error !== '' && <Box height="10" />}
                 <p className="error">{error}</p>

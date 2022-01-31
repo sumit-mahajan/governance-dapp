@@ -29,28 +29,23 @@ function CreateProposal(props) {
             return;
         }
         if (f) return;
+
+        setError({});
+        setLoading(true);
         try {
-            setError({});
-            setLoading(true);
-
             await govContract.methods.propose(title, description).send({ from: accounts[0] });
-
-            setLoading(false);
-            setTitle("")
-            setDescription("")
-
             navigate("/governance")
         } catch (e) {
-            setLoading(false);
-            setTitle("")
-            setDescription("")
-
             if (e.code === 4001) {
                 setError({ button: "Denied Metamask Transaction Signature" });
             } else {
-                setError({ button: "Not enough GOV Tokens OR An active proposal already exists" });
+                console.log(e)
+                setError({ button: "Smart Contract Error. See Console" });
             }
         }
+        setLoading(false);
+        setTitle("")
+        setDescription("")
     };
 
     if (isLoading) {
@@ -89,8 +84,10 @@ function CreateProposal(props) {
                 >
                     {accounts.length > 0 ? 'Create Proposal' : 'Connect Wallet'}
                 </button>
+
                 {error.button && <Box height="10" />}
                 <p className="error">{error.button}</p>
+
                 <Box height="20" />
                 <p className="center">You need to stake 10 GOV while creating proposal.
                     If the proposal is passed by community, your stake will be returned to you</p>

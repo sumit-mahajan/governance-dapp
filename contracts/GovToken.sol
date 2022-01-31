@@ -182,7 +182,7 @@ contract GovToken is IERC20 {
     uint256 declaringResultReward = 500;
 
     function quorumVotes() public pure returns (uint256) {
-        return 3000;
+        return 30;
     }
 
     /// @notice The total number of proposals

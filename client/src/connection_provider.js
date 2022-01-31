@@ -3,7 +3,7 @@ import Web3 from "web3";
 import GovToken from "./contracts/GovToken.json";
 import Exchange from "./contracts/Exchange.json";
 
-const defaultChainId = 5777;
+const defaultChainId = 80001;
 
 export const supportedNetworks = {
     5777: {

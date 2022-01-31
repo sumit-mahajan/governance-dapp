@@ -5,34 +5,6 @@ import Loading from '../../components/loading/Loading';
 import { useConnection } from '../../connection_provider';
 import './proposal_page.scss';
 
-//function to create a address tile
-function createAddressTile(arg) {
-    return (
-        <div className="address-tile">
-            <p> {arg.voterAddress}</p>
-            <p>{parseInt(arg.votes) / 100} votes</p>
-        </div>
-    )
-}
-
-//function to get total votes out of blockchain data
-function getTotalVotes(blockchaindata) {
-    let totalVotesCount = 0;
-    blockchaindata.forEach(function (currentObject) {
-        totalVotesCount += parseInt(currentObject.votes);
-    })
-    return totalVotesCount;
-}
-
-//function to filter votes raw data based on support 
-function partition(array, isValid) {
-    return array.reduce(([pass, fail], elem) => {
-        return isValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
-    }, [[], []]);
-}
-
-// filter blockchain data based on support attribute
-
 function ProposalPage() {
     const { connectionState } = useConnection();
     const { accounts, govContract } = connectionState;
@@ -41,17 +13,18 @@ function ProposalPage() {
 
     const states = ['Live', 'Revoked', 'Passed', 'Failed']
 
-    // const [error, seterror] = useState({ proposal: null, votes: null });
     const [isLoading, setLoading] = useState(false);
-    // To avoid sending multiple transactions while one is already sent
-    const [isTransaction, setTransaction] = useState(false);
+    const [error, setError] = useState({ vote: '', buttons: '' });
+
     // Get Proposal Index from url
     const { index } = useParams()
+
     // To Store vote for or against
     const [support, setSupport] = useState(null);
+
     // Votes i.e. Number of Tokens to vote
     const [numberOfVotes, setNumberOfVotes] = useState(0);
-    // To store the proposal info
+
     const [proposal, setProposal] = useState({
         againstVotes: "",
         announced: false,
@@ -69,7 +42,6 @@ function ProposalPage() {
         hasVoted: false,
         state: 0
     })
-    // const [blockChainData , setBlockChainData ] = useState([]) ;
 
     // Helper to shorten address
     const shortenAddress = (addr) => {
@@ -78,14 +50,11 @@ function ProposalPage() {
 
     // To check if account[0] has voted
     const checkHasVoted = (votes) => {
-        // console.log("Check has Voted called ", accounts[0])
         for (let i = 0; i < votes.length; i++) {
-            // console.log("Has Voted - ",votes[i].voterAddress.toLowerCase(), accounts[0].toLowerCase())
             if (votes[i].voterAddress.toLowerCase() === accounts[0].toLowerCase()) {
                 return true;
             }
         }
-        // console.log("Has Voted - ",votes[i].voterAddress == accounts[0])
         return false;
     }
 
@@ -94,30 +63,20 @@ function ProposalPage() {
         return parseInt(proposal.deadlineForVoting) * 1000 < Date.now()
     }
 
-    // To handle Vote
-    const handleVote = async () => {
-        if (support == null) {
-            alert("Please mention your support either Yea or Nay for proposal");
-            return;
-        } else if (numberOfVotes === 0) {
-            alert("Please mention number of votes");
-            return;
-        }
-        setLoading(true);
-        try {
-            // To avoid sending multiple transactions
-            if (!isTransaction) {
-                setTransaction(true);
-                // Need to multiply support vote by 10^2 as decimal places is 2
-                await govContract.methods.castVote(index, support, numberOfVotes * 10 ** 2).send({ from: accounts[0] });
-                fetchData();
-                setTransaction(false);
-            }
-        } catch (error) {
-            setTransaction(false);
-            console.log("Error", error);
-        }
-        setLoading(false);
+    // To get total votes out of blockchain data
+    const getTotalVotes = (blockchaindata) => {
+        let totalVotesCount = 0;
+        blockchaindata.forEach(function (currentObject) {
+            totalVotesCount += parseInt(currentObject.votes);
+        })
+        return totalVotesCount;
+    }
+
+    // To filter votes raw data based on support 
+    const partition = (array, isValid) => {
+        return array.reduce(([pass, fail], elem) => {
+            return isValid(elem) ? [[...pass, elem], fail] : [pass, [...fail, elem]];
+        }, [[], []]);
     }
 
     // To highlight selected option and change support state
@@ -130,58 +89,77 @@ function ProposalPage() {
         } else {
             setSupport(false);
         }
-        // console.log(support)
+    }
+
+    // To handle Vote
+    const handleVote = async () => {
+        if (support == null) {
+            setError({ vote: "Please mention your support either Yea or Nay for proposal" });
+            return;
+        } else if (numberOfVotes === 0) {
+            setError({ vote: "Please mention number of votes" });
+            return;
+        }
+        setError({ vote: "" })
+        setLoading(true);
+        try {
+            // Need to multiply support vote by 10^2 as decimal places is 2
+            await govContract.methods.castVote(index, support, numberOfVotes * 10 ** 2).send({ from: accounts[0] });
+            fetchData();
+        } catch (e) {
+            if (e.code === 4001) {
+                setError({ vote: "Denied Metamask Transaction Signature" });
+            } else {
+                console.log(e)
+                setError({ vote: "Smart Contract Error. See Console" });
+            }
+        }
+        setLoading(false);
     }
 
     // To handle Cancel Proposal
     const handleCancelProposal = async () => {
+        setError({ buttons: "" })
         setLoading(true);
         try {
-            // To avoid multiple transactions
-            if (!isTransaction) {
-                setTransaction(true);
-                await govContract.methods.cancelProposal(index).send({ from: accounts[0] });
-                fetchData()
-                setTransaction(false);
+            await govContract.methods.cancelProposal(index).send({ from: accounts[0] });
+            fetchData()
+        } catch (e) {
+            if (e.code === 4001) {
+                setError({ buttons: "Denied Metamask Transaction Signature" });
+            } else {
+                console.log(e)
+                setError({ buttons: "Smart Contract Error. See Console" });
             }
-        } catch (error) {
-            setTransaction(false);
-            console.log("Error", error);
         }
         setLoading(false)
     }
 
     // To handle Declare Result
     const handleDeclareResult = async () => {
+        setError({ buttons: "" })
         setLoading(true)
         try {
-            // To avoid multiple transactions
-            if (!isTransaction) {
-                setTransaction(true);
-                let res = await govContract.methods.declareResult(index).send({ from: accounts[0] });
-                console.log(res)
-                fetchData()
-                setTransaction(false);
+            await govContract.methods.declareResult(index).send({ from: accounts[0] });
+            fetchData()
+        } catch (e) {
+            if (e.code === 4001) {
+                setError({ buttons: "Denied Metamask Transaction Signature" });
+            } else {
+                console.log(e)
+                setError({ buttons: "Smart Contract Error. See Console" });
             }
-        } catch (error) {
-            setTransaction(false);
-            console.log("Error", error);
         }
         setLoading(false);
     }
 
     const fetchData = async () => {
-        // let temp = await govContract.methods.getVotes(
-        //     parseInt(params.index)
-        // ).call() ;
-        // setBlockChainData(temp) ;
-        // console.log(temp);
+        setLoading(true);
         try {
             const response = await govContract.methods.proposals(parseInt(index)).call();
             const res = await govContract.methods.getVotes(parseInt(index)).call();
             const voted = checkHasVoted(res);
             const st = await govContract.methods.state(parseInt(index)).call();
-
             setProposal({
                 againstVotes: response.againstVotes,
                 announced: response.announced,
@@ -197,36 +175,22 @@ function ProposalPage() {
                 voterCount: response.voterCount,
                 votes: res,
                 hasVoted: voted,
-                state: st
+                state: parseInt(st)
             })
         } catch (error) {
             console.log(error.message)
         }
+        setLoading(false);
     }
 
     useEffect(() => {
-        // console.log('Hello Called')
-        setLoading(true);
         fetchData()
-        setLoading(false);
-    }, []);
-
-    // On accounts changed Refetch
-    useEffect(() => {
-        setLoading(true);
-        fetchData()
-        setLoading(false);
-    }, [accounts]);
-    //get blockChainData from network
-    // const tempdata = await govContract.methods.getVotes(
-    //     parseInt(params.index)
-    // ).call() ;
-    // console.log(tempdata);
+    }, [accounts, govContract]);
 
     const [filterForData, filterAgainstData] = partition(proposal.votes, (e) => e.support === true);
 
     if (isLoading) {
-        return <Loading page="home" />;
+        return <Loading text="Please Wait" />;
     }
 
     return (
@@ -240,9 +204,17 @@ function ProposalPage() {
                     <p className="heading">{proposal.title}</p>
                     <Box height="10" />
                     <div className="hr-flex-start">
-                        <p className="p-result" style={(proposal.state === 0 || proposal.state === 2) ? { '--res-color': 'var(--primary)' } : { '--res-color': 'rgba(0,0,0,0.5)' }}>{states[proposal.state]}</p>
+                        <p className="p-result"
+                            style={(proposal.state === 0 || proposal.state === 2)
+                                ? { '--res-color': 'var(--primary)' } : { '--res-color': 'rgba(0,0,0,0.5)' }}
+                        >
+                            {states[proposal.state]}
+                        </p>
                         <Box width="20" />
                         <p className="p-date">{new Date(parseInt(proposal.dateOfCreation) * 1000).toLocaleString('default', { month: 'long', day: '2-digit', year: 'numeric' })}</p>
+
+                        <Box width="20" />
+                        <p className="p-date">Quorum - 30</p>
                     </div>
                 </div>
                 <p className="p-owner">
@@ -267,6 +239,9 @@ function ProposalPage() {
 
                         <button className="clickable" onClick={handleVote}>Vote</button>
                     </div>
+
+                    {error.vote !== '' && <Box height="10" />}
+                    <p className="error">{error.vote}</p>
                 </div>
             )
             }
@@ -279,7 +254,10 @@ function ProposalPage() {
                             <p> {getTotalVotes(filterForData) / 100} votes</p>
                         </div>
                         <Box height="15" />
-                        <div className="progress-bar"></div>
+                        <div
+                            data-percent={`${(getTotalVotes(filterForData) * 100 / (getTotalVotes(filterForData) + getTotalVotes(filterAgainstData)))}%`}
+                            className="progress-bar">
+                        </div>
                     </div>
 
                     <div className="card-subtitle hr-flex">
@@ -288,7 +266,14 @@ function ProposalPage() {
                     </div>
 
                     {
-                        filterForData.map(createAddressTile)
+                        filterForData.map(({ voterAddress, votes }, idx) => {
+                            return (
+                                <div key={idx} className="address-tile">
+                                    <p> {voterAddress}</p>
+                                    <p>{parseInt(votes) / 100} votes</p>
+                                </div>
+                            );
+                        })
                     }
                 </div>
 
@@ -299,14 +284,23 @@ function ProposalPage() {
                             <p> {getTotalVotes(filterAgainstData) / 100} votes</p>
                         </div>
                         <Box height="15" />
-                        <div className="progress-bar"></div>
+                        <div
+                            data-percent={`${(getTotalVotes(filterAgainstData) * 100 / (getTotalVotes(filterForData) + getTotalVotes(filterAgainstData)))}%`}
+                            className="progress-bar"></div>
                     </div>
                     <div className="card-subtitle hr-flex">
                         <p className="subtitle">{filterAgainstData.length} addresses</p>
                         <p className="subtitle">votes</p>
                     </div>
                     {
-                        filterAgainstData.map(createAddressTile)
+                        filterAgainstData.map(({ voterAddress, votes }, idx) => {
+                            return (
+                                <div key={idx} className="address-tile">
+                                    <p> {voterAddress}</p>
+                                    <p>{parseInt(votes) / 100} votes</p>
+                                </div>
+                            );
+                        })
                     }
                 </div>
             </div>
@@ -316,15 +310,21 @@ function ProposalPage() {
                     accounts[0] && (
                         <div>
                             {
-                                (!isDeadlinePassed() && proposal.proposer.toLowerCase() === accounts[0].toLowerCase() && !proposal.canceled) && <button className='clickable' onClick={handleCancelProposal}>Cancel Proposal</button>
+                                (!isDeadlinePassed() && proposal.proposer.toLowerCase() === accounts[0].toLowerCase() && !proposal.canceled) &&
+                                <button className='clickable' onClick={handleCancelProposal}>Cancel Proposal</button>
                             }
                             {
-                                (isDeadlinePassed() && !proposal.announced && !proposal.canceled && accounts[0]) && <button className='clickable' onClick={handleDeclareResult}>Declare Result</button>
+                                (isDeadlinePassed() && !proposal.announced && !proposal.canceled && accounts[0]) &&
+                                <button className='clickable' onClick={handleDeclareResult}>Declare Result</button>
                             }
                         </div>
                     )
                 }
             </div>
+
+            {error.buttons !== '' && <Box height="10" />}
+            <p className="error">{error.buttons}</p>
+
             <Box height="30" />
             <p className="heading">Description</p>
             <Box height="20" />
