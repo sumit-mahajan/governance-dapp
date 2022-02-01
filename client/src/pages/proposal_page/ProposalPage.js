@@ -254,9 +254,11 @@ function ProposalPage() {
                             <p> {getTotalVotes(filterForData) / 100} votes</p>
                         </div>
                         <Box height="15" />
-                        <div
-                            data-percent={`${(getTotalVotes(filterForData) * 100 / (getTotalVotes(filterForData) + getTotalVotes(filterAgainstData)))}%`}
-                            className="progress-bar">
+                        <div className="progress-bar-track">
+                            <div
+                                style={{ width: `${(getTotalVotes(filterForData) * 100 / (getTotalVotes(filterForData) + getTotalVotes(filterAgainstData)))}%` }}
+                                className="progress-bar-thumb">
+                            </div>
                         </div>
                     </div>
 
@@ -284,9 +286,12 @@ function ProposalPage() {
                             <p> {getTotalVotes(filterAgainstData) / 100} votes</p>
                         </div>
                         <Box height="15" />
-                        <div
-                            data-percent={`${(getTotalVotes(filterAgainstData) * 100 / (getTotalVotes(filterForData) + getTotalVotes(filterAgainstData)))}%`}
-                            className="progress-bar"></div>
+                        <div className="progress-bar-track">
+                            <div
+                                style={{ width: `${(getTotalVotes(filterAgainstData) * 100 / (getTotalVotes(filterForData) + getTotalVotes(filterAgainstData)))}%` }}
+                                className="progress-bar-thumb">
+                            </div>
+                        </div>
                     </div>
                     <div className="card-subtitle hr-flex">
                         <p className="subtitle">{filterAgainstData.length} addresses</p>

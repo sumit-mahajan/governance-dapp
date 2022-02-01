@@ -84,24 +84,16 @@
       background-color: rgba(0, 0, 0, 0.1);
     }
 
-    .progress-bar {
-      position: relative;
+    .progress-bar-track {
       height: 3px;
       border-radius: 1px;
       width: 100%;
       background-color: rgba(0, 0, 0, 0.25);
     }
 
-    [data-percent]::before {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      left: 0%;
-      top: 0%;
+    .progress-bar-thumb {
       height: 3px;
       border-radius: 1px;
-      width: 30%;
-      /* attr(data-percent); */
       background-color: var(--primary);
     }
 
